@@ -13,10 +13,10 @@ let map = L.map("map").setView([stephansdom.lat, stephansdom.lng], stephansdom.z
 
 //Overlays definieren
 let overlays ={
-    Sights:L.featureGroup().addTo(map),
-    Lines:L.featureGroup().addTo(map),
-    Stops:L.featureGroup().addTo(map),
-    Zones:L.featureGroup().addTo(map),
+    sights:L.featureGroup().addTo(map),
+    lines:L.featureGroup().addTo(map),
+    stops:L.featureGroup().addTo(map),
+    zones:L.featureGroup().addTo(map),
 }
 //Layercontrol
 L.control.layers({
@@ -26,10 +26,10 @@ L.control.layers({
     }).addTo(map)
     
 }, {
-    "Sehenswürdigkeiten":overlays.Sights,
-    "Vienna Sightseeing Linien":overlays.Lines,
-    "Vienna Sightseeing Haltestellen":overlays.Stops,
-    "Fußgängerzonen":overlays.Zones,
+    "Sehenswürdigkeiten":overlays.sights,
+    "Vienna Sightseeing Linien":overlays.lines,
+    "Vienna Sightseeing Haltestellen":overlays.stops,
+    "Fußgängerzonen":overlays.zones,
 }).addTo(map);
 
 //Maßstab hinzufügen
@@ -45,7 +45,7 @@ async function loadSights(url) {
     console.log(jsondata);
     L.geoJSON(jsondata,{
         attribution: "Datenquelle: <a href ='https://data.wien.gv.at'>Stadt Wien</a>"
-    }).addTo(map);
+    }).addTo(overlays.sights);
 }
 
 
@@ -57,7 +57,7 @@ async function loadLines(url) {
     console.log(jsondata);
     L.geoJSON(jsondata,{
         attribution: "Datenquelle: <a href ='https://data.wien.gv.at'>Stadt Wien</a>"
-    }).addTo(map);
+    }).addTo(overlays.lines);
 }
 
 
@@ -69,7 +69,7 @@ async function loadStops(url) {
     console.log(jsondata);
     L.geoJSON(jsondata,{
         attribution: "Datenquelle: <a href ='https://data.wien.gv.at'>Stadt Wien</a>"
-    }).addTo(map);
+    }).addTo(overlays.stops);
 }
 
 
@@ -81,7 +81,7 @@ async function loadZones(url) {
     console.log(jsondata);
     L.geoJSON(jsondata,{
         attribution: "Datenquelle: <a href ='https://data.wien.gv.at'>Stadt Wien</a>"
-    }).addTo(map);
+    }).addTo(overlays.zones);
 }
 
 ///GeoJSON laden und visualisieren
