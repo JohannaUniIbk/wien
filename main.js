@@ -20,7 +20,10 @@ L.control.layers({
     }).addTo(map)
     
 }, {
-
+    "Sehenswürdigkeiten":L.featureGroup().addTo(map),
+    "Vienna Sightseeing Linien":L.featureGroup().addTo(map),
+    "Vienna Sightseeing Haltestellen":L.featureGroup().addTo(map),
+    "Fußgängerzonen":L.featureGroup().addTo(map),
 }).addTo(map);
 
 //Maßstab hinzufügen
