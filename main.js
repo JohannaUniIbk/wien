@@ -20,10 +20,13 @@ let overlays ={
 }
 //Layercontrol
 L.control.layers({
-    "BasemapAT grau": L.tileLayer('https://mapsneu.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png', {
-        maxZoom: 19,
-        attribution: 'Hintergrundkarte: <a href="https://www.basemap.at">basemap.at</a>'
-    }).addTo(map)
+    "BasemapAT ": L.tileLayer.provider('BasemapAT.basemap'),
+    "BasemapAT grau": L.tileLayer.provider('BasemapAT.grau').addTo(map),
+    "BasemapAT Overlay ": L.tileLayer.provider('BasemapAT.overlay'),
+    "BasemapAT HighDPI": L.tileLayer.provider('BasemapAT.highdpi'),
+    "BasemapAT Orthofoto": L.tileLayer.provider('BasemapAT.orthofoto'),
+    "BasemapAT Relief": L.tileLayer.provider('BasemapAT.terrain'),
+    "BasemapAT Oberfläche ": L.tileLayer.provider('BasemapAT.surface'),
     
 }, {
     "Sehenswürdigkeiten":overlays.sights,
