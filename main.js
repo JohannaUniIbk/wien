@@ -26,7 +26,10 @@ L.control.layers({
     }).addTo(map)
     
 }, {
-    
+    "Sehenswürdigkeiten":overlays.Sights,
+    "Vienna Sightseeing Linien":overlays.Lines,
+    "Vienna Sightseeing Haltestellen":overlays.Stops,
+    "Fußgängerzonen":overlays.Zones,
 }).addTo(map);
 
 //Maßstab hinzufügen
