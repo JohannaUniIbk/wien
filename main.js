@@ -11,7 +11,13 @@ let stephansdom = {
 // Karte initialisieren
 let map = L.map("map").setView([stephansdom.lat, stephansdom.lng], stephansdom.zoom);
 
-
+//Overlays definieren
+let overlays ={
+    Sights:L.featureGroup().addTo(map),
+    Lines:L.featureGroup().addTo(map),
+    Stops:L.featureGroup().addTo(map),
+    Zones:L.featureGroup().addTo(map),
+}
 //Layercontrol
 L.control.layers({
     "BasemapAT grau": L.tileLayer('https://mapsneu.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png', {
@@ -20,10 +26,7 @@ L.control.layers({
     }).addTo(map)
     
 }, {
-    "Sehenswürdigkeiten":L.featureGroup().addTo(map),
-    "Vienna Sightseeing Linien":L.featureGroup().addTo(map),
-    "Vienna Sightseeing Haltestellen":L.featureGroup().addTo(map),
-    "Fußgängerzonen":L.featureGroup().addTo(map),
+    
 }).addTo(map);
 
 //Maßstab hinzufügen
