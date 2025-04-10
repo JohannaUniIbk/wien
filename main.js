@@ -12,12 +12,12 @@ let stephansdom = {
 let map = L.map("map").setView([stephansdom.lat, stephansdom.lng], stephansdom.zoom);
 
 //Overlays definieren
-let overlays ={
-    sights:L.featureGroup().addTo(map),
-    lines:L.featureGroup().addTo(map),
-    stops:L.featureGroup().addTo(map),
-    zones:L.featureGroup().addTo(map),
-    hotels:L.featureGroup().addTo(map),
+let overlays = {
+    sights: L.featureGroup().addTo(map),
+    lines: L.featureGroup().addTo(map),
+    stops: L.featureGroup().addTo(map),
+    zones: L.featureGroup().addTo(map),
+    hotels: L.featureGroup().addTo(map),
 }
 //Layercontrol
 L.control.layers({
@@ -28,19 +28,19 @@ L.control.layers({
     "BasemapAT Orthofoto": L.tileLayer.provider('BasemapAT.orthofoto'),
     "BasemapAT Relief": L.tileLayer.provider('BasemapAT.terrain'),
     "BasemapAT Oberfläche ": L.tileLayer.provider('BasemapAT.surface'),
-    
+
 }, {
-    "Sehenswürdigkeiten":overlays.sights,
-    "Vienna Sightseeing Linien":overlays.lines,
-    "Vienna Sightseeing Haltestellen":overlays.stops,
-    "Fußgängerzonen":overlays.zones,
-    "Hotels und Unterkünfte Standorte Wien":overlays.hotels,
+    "Sehenswürdigkeiten": overlays.sights,
+    "Vienna Sightseeing Linien": overlays.lines,
+    "Vienna Sightseeing Haltestellen": overlays.stops,
+    "Fußgängerzonen": overlays.zones,
+    "Hotels und Unterkünfte Standorte Wien": overlays.hotels,
 }).addTo(map);
 
 //Maßstab hinzufügen
 L.control.scale({
-        imperial: false,
-    }).addTo(map);
+    imperial: false,
+}).addTo(map);
 
 //Sehenswürdigkeiten Standorte Wien
 async function loadSights(url) {
@@ -48,17 +48,17 @@ async function loadSights(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     console.log(jsondata);
-    L.geoJSON(jsondata,{
+    L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href ='https://data.wien.gv.at'>Stadt Wien</a>",
-        pointToLayer: function(feature, latlng) {
-        return L.marker(latlng,{
-            icon: L.icon({
-                iconUrl: "icons/photo.png", 
-                iconAnchor:[16,37]
-            })
-        });
-            
-       }
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/photo.png",
+                    iconAnchor: [16, 37]
+                })
+            });
+
+        }
     }).addTo(overlays.sights);
 }
 
@@ -69,28 +69,28 @@ async function loadLines(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     console.log(jsondata);
-    L.geoJSON(jsondata,{
+    L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href ='https://data.wien.gv.at'>Stadt Wien</a>",
         style: function (feature) {
             console.log(feature.properties.LINE_NAME);
             let lineColor;
 
-            if(feature.properties.LINE_NAME=="Yellow Line"){
+            if (feature.properties.LINE_NAME == "Yellow Line") {
                 lineColor = "#FFDC00";
-            } else if (feature.properties.LINE_NAME=="Blue Line"){
-                lineColor ="#0074D9";
-            } else if (feature.properties.LINE_NAME=="Red Line"){
+            } else if (feature.properties.LINE_NAME == "Blue Line") {
+                lineColor = "#0074D9";
+            } else if (feature.properties.LINE_NAME == "Red Line") {
                 lineColor = "#FF4136";
-            } else if (feature.properties.LINE_NAME=="Green Line"){
+            } else if (feature.properties.LINE_NAME == "Green Line") {
                 lineColor = "#2ECC40";
-            } else if  (feature.properties.LINE_NAME=="Grey Line"){
+            } else if (feature.properties.LINE_NAME == "Grey Line") {
                 lineColor = "#AAAAAA";
-            } else if (feature.properties.LINE_NAME=="Orange Line"){
+            } else if (feature.properties.LINE_NAME == "Orange Line") {
                 lineColor = "#FF851B";
-            } else{
+            } else {
                 lineColor = "#111111";
             }
-            return{
+            return {
                 color: lineColor
             }
         }
@@ -104,7 +104,7 @@ async function loadStops(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     console.log(jsondata);
-    L.geoJSON(jsondata,{
+    L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href ='https://data.wien.gv.at'>Stadt Wien</a>"
     }).addTo(overlays.stops);
 }
@@ -116,15 +116,15 @@ async function loadZones(url) {
     let response = await fetch(url);
     let jsondata = await response.json();
     console.log(jsondata);
-    L.geoJSON(jsondata,{
+    L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href ='https://data.wien.gv.at'>Stadt Wien</a>",
         style: function (feature) {
             console.log(feature);
             return {
-                color:"#F012BE",
+                color: "#F012BE",
                 weight: 1,
                 opacity: 0.4,
-                fillOpacity:  0.1,
+                fillOpacity: 0.1,
             }
         }
     }).addTo(overlays.zones);
@@ -136,10 +136,33 @@ async function loadHotels(url) {
     console.log(url);
     let response = await fetch(url);
     let jsondata = await response.json();
-    console.log(jsondata);
-    L.geoJSON(jsondata,{
+    //console.log(jsondata);
+    L.geoJSON(jsondata, {
         attribution: "Datenquelle: <a href ='https://data.wien.gv.at'>Stadt Wien</a>",
-       
+        pointToLayer: function (feature, latlng) {
+            console.log(feature.properties.KATEGORIE_TXT);
+            let iconName;
+            if (feature.properties.KATEGORIE_TXT == "1*") {
+                iconName = "hotel_1stars.png";
+            } else if (feature.properties.KATEGORIE_TXT == "2*") {
+                iconName = "hotel_2stars.png";
+            } else if (feature.properties.KATEGORIE_TXT == "3*") {
+                iconName = "hotel_3stars.png";
+            } else if (feature.properties.KATEGORIE_TXT == "4*") {
+                iconName = "hotel_4stars.png";
+            } else if (feature.properties.KATEGORIE_TXT == "5*") {
+                iconName = "hotel_4stars.png";
+            } else {
+                iconName = "hotel_0stars.png";
+            }
+            //console.log(iconName);
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: `icons/${iconName}`,
+                    iconAnchor: [16, 37]
+                })
+            });
+        }
     }).addTo(overlays.hotels);
 }
 
