@@ -214,9 +214,13 @@ async function loadHotels(url) {
         onEachFeature: function (feature, layer) {
             console.log(feature.properties);
             layer.bindPopup(`
-                <h4>Fußgängerzone ${feature.properties.ADRESSE}</h4>
-                <div><i class="fa-regular fa-clock"></i> ${feature.properties.ZEITRAUM}</div>
-                <div style="margin-top: 10px;"><i class="fa-solid fa-circle-info"></i> ${feature.properties.AUSN_TEXT}</div>
+                <h3>${feature.properties.BETRIEB}</h3>
+                <h4>${feature.properties.BETRIEBSART_TXT} ${feature.properties.KATEGORIE_TXT}</h4>
+                <hr style="border-top: 2px solid black">
+                <div>Addr.: ${feature.properties.ADRESSE}</div>
+                <div> Tel.: <a href="tel:${feature.properties.KONTAKT_TEL}">${feature.properties.KONTAKT_TEL}</a> </div>
+                <a href="mailto:${feature.properties.KONTAKT_EMAIL}">${feature.properties.KONTAKT_EMAIL}</a>
+                <div> <a href="${feature.properties.WEBLINK1}" target="_blank">Homepage</a></div>
             `);
         }
     }).addTo(overlays.hotels);
