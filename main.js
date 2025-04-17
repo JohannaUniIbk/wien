@@ -166,6 +166,14 @@ async function loadZones(url) {
                 opacity: 0.4,
                 fillOpacity: 0.1,
             }
+        }, 
+        onEachFeature: function (feature, layer) {
+            console.log(feature.properties);
+            layer.bindPopup(`
+                <h4>Fußgängerzone ${feature.properties.ADRESSE}</h4>
+                <div><i class="fa-regular fa-clock"></i> ${feature.properties.ZEITRAUM}</div>
+                <div style="margin-top: 10px;"><i class="fa-solid fa-circle-info"></i> ${feature.properties.AUSN_TEXT}</div>
+            `);
         }
     }).addTo(overlays.zones);
 
