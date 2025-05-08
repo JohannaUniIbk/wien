@@ -142,7 +142,7 @@ async function loadStops(url) {
             console.log(feature.properties);
             layer.bindPopup(`
                 <h4> <i class="fa-solid fa-bus"></i> ${feature.properties.LINE_NAME}</h4>
-                <station>${feature.properties.STAT_ID} ${feature.properties.STAT_NAME}</station>
+                <p>${feature.properties.STAT_ID} ${feature.properties.STAT_NAME}</p>
             `);
         }
 
